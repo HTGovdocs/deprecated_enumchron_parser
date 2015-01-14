@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+s = ARGV.join(' ')
+
+$:.unshift 'lib'
+require 'pp'
+require 'enumchron'
+t = Enumchron::Transform.new;p = Enumchron::Parser.new;
+
+puts "\n-----------original\n#{s}\n"
+puts '-----------parses to'
+a  = p.parse(s)
+pp a
+puts '-----------transforms to'
+pp t.apply a
+puts "\n\n"
