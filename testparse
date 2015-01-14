@@ -4,11 +4,22 @@ s = ARGV.join(' ')
 $:.unshift 'lib'
 require 'pp'
 require 'enumchron'
-t = Enumchron::Transform.new;p = Enumchron::Parser.new;
+t = Enumchron::Transform.new; p = Enumchron::Parser.new;
+
+
+def preprocess_line(l)
+  l.chomp!                    # remove trailing cr
+  l.downcase!                 # lowercase
+  l.gsub!('*', '')            # asterisks to nothing
+  l.gsub!(/\t/, ' ')          # tabs to spaces
+  l.strip!                    # leading and trailing spaces
+  l.gsub!(/[\.,:;\s]+\Z/, '') # trailing punctuation/space
+  l
+end
 
 puts "\n-----------original\n#{s}\n"
 puts '-----------parses to'
-a  = p.parse(s)
+a = p.parse(Enumchron::Parser.preprocess_line(s))
 pp a
 puts '-----------transforms to'
 pp t.apply a

@@ -2,6 +2,16 @@ require 'parslet'
 
 class Enumchron::Parser < Parslet::Parser
 
+  def self.preprocess_line(l)
+    l.chomp!                    # remove trailing cr
+    l.downcase!                 # lowercase
+    l.gsub!('*', '')            # asterisks to nothing
+    l.gsub!(/\t/, ' ')          # tabs to spaces
+    l.strip!                    # leading and trailing spaces
+    l.gsub!(/[\.,:;\s]+\Z/, '') # trailing punctuation/space
+    l
+  end
+
   def initialize(*args)
     super
     lv_generator('number', 'numbers', 'nos', 'no', 'n')
@@ -221,7 +231,7 @@ class Enumchron::Parser < Parslet::Parser
     explicit |
         year_implicit |
         months |
-        ns | incomplete
+        ns | incomplete.as(:incompl)
   }
 
   rule(:comp) { slam_dunks | suppl | ind }

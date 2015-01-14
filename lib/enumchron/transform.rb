@@ -168,6 +168,8 @@ class Enumchron::Transform < Parslet::Transform
   rule(:eyears => simple(:x)) { {:years => [x.to_i]} }
   rule(:eyears => sequence(:a)) { {:years => a.map { |x| x.to_i }} }
 
+  rule(:incompl => simple(:x)) { {:incomplete => true}}
+
   # numlets just plain aren't working yet. V. complex
   #
   #rule(:numlets => {:single => {:numpart => simple(:n), :letpart => simple(:l)}}) { Enumchron::Numlet.new(Integer(n), l) }
