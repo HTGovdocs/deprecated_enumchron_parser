@@ -104,7 +104,7 @@ t = Enumchron::Transform.new
 s = "the string you want to parse"
 begin
   parsed = p.parse(Enumchron::Parser.preprocess_line(s))
-  puts "#{s} => #{t.appy(parse)"
+  puts "#{s} => #{t.apply(parse)"
 rescue Parslet::ParseFailed
   puts "Failed to parse #{s}"
 end
